@@ -20,10 +20,12 @@ from src.storage.dataset_versions import DatasetVersioner
 
 
 class DataScienceOrchestrator:
-    def __init__(self, dataset_path: str, run_name: str = "", target_column: str = "Survived"):
+    def __init__(self, dataset_path: str, run_name: str = "", target_column: str = "Survived",
+                 group_column: str = "Sex"):
         self.dataset_path = Path(dataset_path)
         self.run_name = run_name or f"run_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         self.target_column = target_column
+        self.group_column = group_column
         self.settings = get_settings()
         self.experiment_store = ExperimentStore()
         self.versioner = DatasetVersioner()
@@ -96,7 +98,7 @@ class DataScienceOrchestrator:
                 f"Perform statistical analysis on the engineered features in '{processed_dir}':\n"
                 f"1) Run descriptive_stats on the feature-engineered CSV\n"
                 f"2) Run correlation_analyzer on the feature-engineered CSV\n"
-                f"3) Run hypothesis_tester with column='{self.target_column}' and group_column='Sex' for t-test\n"
+                f"3) Run hypothesis_tester with column='{self.target_column}' and group_column='{self.group_column}' for t-test\n"
                 f"Focus on relationships between features and the target variable.\n"
                 f"Provide key statistical findings."
             ),

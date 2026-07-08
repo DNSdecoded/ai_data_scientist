@@ -132,7 +132,7 @@ main.py         CLI entry point
 
 ## Notes
 
-- **Target column** — pass `--target <column>` (CLI) or set it in the dashboard; defaults to `Survived`. The statistician's t-test still groups by `Sex` (Titanic-specific) — adjust that line in `src/orchestrator.py` for other datasets.
+- **Target / group columns** — pass `--target <column>` and `--group <column>` (CLI) or set them in the dashboard; default to `Survived` / `Sex` for the bundled Titanic sample. Change them for any other dataset — nothing else is hardcoded.
 - **Rate limits** — the orchestrator retries on `429` with exponential backoff (60/120/180s). Keep `MAX_RPM` at or below your provider tier.
 - **Security** — rotate any API key that has been shared or committed. Keys live in `.env` only.
 

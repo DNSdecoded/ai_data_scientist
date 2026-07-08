@@ -15,6 +15,7 @@ def main():
     parser.add_argument("--model", "-m", type=str, help="LLM model identifier (e.g., gemini/gemini-3.5-flash)")
     parser.add_argument("--run-name", "-r", type=str, default="", help="Name for this analysis run")
     parser.add_argument("--target", "-t", type=str, default="Survived", help="Target column for feature selection and model training")
+    parser.add_argument("--group", "-g", type=str, default="Sex", help="Grouping column for the statistician's t-test")
     args = parser.parse_args()
 
     if args.model:
@@ -41,6 +42,7 @@ def main():
             dataset_path=str(file_path),
             run_name=args.run_name,
             target_column=args.target,
+            group_column=args.group,
         )
         result = orchestrator.run()
 
