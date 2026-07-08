@@ -70,6 +70,8 @@ with tab_run:
     else:
         st.info(f"Dataset: {st.session_state.get('dataset_name', 'Unknown')}")
         run_name = st.text_input("Run Name", value=f"run_{pd.Timestamp.now().strftime('%Y%m%d_%H%M%S')}")
+        target_column = st.text_input("Target Column", value="Survived",
+                                      help="Column to predict / select features against")
 
         if st.button("Start AI Analysis", type="primary", width="stretch"):
             with st.spinner("Running AI Data Scientist pipeline... This may take a few minutes."):
@@ -77,6 +79,7 @@ with tab_run:
                     orchestrator = DataScienceOrchestrator(
                         dataset_path=st.session_state["dataset_path"],
                         run_name=run_name,
+                        target_column=target_column,
                     )
                     result = orchestrator.run()
                     st.session_state["last_result"] = result

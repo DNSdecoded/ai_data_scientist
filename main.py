@@ -14,6 +14,7 @@ def main():
     parser.add_argument("--dashboard", "-d", action="store_true", help="Launch Streamlit dashboard")
     parser.add_argument("--model", "-m", type=str, help="LLM model identifier (e.g., gemini/gemini-3.5-flash)")
     parser.add_argument("--run-name", "-r", type=str, default="", help="Name for this analysis run")
+    parser.add_argument("--target", "-t", type=str, default="Survived", help="Target column for feature selection and model training")
     args = parser.parse_args()
 
     if args.model:
@@ -39,6 +40,7 @@ def main():
         orchestrator = DataScienceOrchestrator(
             dataset_path=str(file_path),
             run_name=args.run_name,
+            target_column=args.target,
         )
         result = orchestrator.run()
 

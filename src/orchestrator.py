@@ -20,9 +20,10 @@ from src.storage.dataset_versions import DatasetVersioner
 
 
 class DataScienceOrchestrator:
-    def __init__(self, dataset_path: str, run_name: str = ""):
+    def __init__(self, dataset_path: str, run_name: str = "", target_column: str = "Survived"):
         self.dataset_path = Path(dataset_path)
         self.run_name = run_name or f"run_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+        self.target_column = target_column
         self.settings = get_settings()
         self.experiment_store = ExperimentStore()
         self.versioner = DatasetVersioner()
@@ -78,7 +79,7 @@ class DataScienceOrchestrator:
                 f"Engineer features from the cleaned dataset:\n"
                 f"1) Run feature_encoder on the cleaned CSV in '{processed_dir}' with method='auto'\n"
                 f"2) Run feature_creator on the encoded file to create interaction features\n"
-                f"3) Run feature_selector with target_column='Survived' to select top features\n"
+                f"3) Run feature_selector with target_column='{self.target_column}' to select top features\n"
                 f"4) The feature-engineered file will be saved to '{processed_dir}'\n"
                 f"Provide a summary of feature engineering operations."
             ),
@@ -95,7 +96,7 @@ class DataScienceOrchestrator:
                 f"Perform statistical analysis on the engineered features in '{processed_dir}':\n"
                 f"1) Run descriptive_stats on the feature-engineered CSV\n"
                 f"2) Run correlation_analyzer on the feature-engineered CSV\n"
-                f"3) Run hypothesis_tester with column='Survived' and group_column='Sex' for t-test\n"
+                f"3) Run hypothesis_tester with column='{self.target_column}' and group_column='Sex' for t-test\n"
                 f"Focus on relationships between features and the target variable.\n"
                 f"Provide key statistical findings."
             ),
@@ -111,7 +112,7 @@ class DataScienceOrchestrator:
             description=(
                 f"Train and evaluate machine learning models on the engineered features:\n"
                 f"1) Run model_trainer on the feature-engineered CSV in '{processed_dir}' "
-                f"with target_column='Survived' and task_type='classification'\n"
+                f"with target_column='{self.target_column}' and task_type='classification'\n"
                 f"2) Run model_evaluator on the model results JSON in '{OUTPUTS_DIR}'\n"
                 f"Provide a model comparison table with all metrics."
             ),

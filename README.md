@@ -68,8 +68,8 @@ MAX_COLUMNS=5000
 ### CLI
 
 ```bash
-# Analyze a dataset
-python main.py --file data/titanic_sample.csv --run-name my_run
+# Analyze a dataset (--target sets the column to predict)
+python main.py --file data/titanic_sample.csv --run-name my_run --target Survived
 
 # Override the model for one run
 python main.py --file data.csv --model gemini/gemini-2.5-flash
@@ -132,7 +132,7 @@ main.py         CLI entry point
 
 ## Notes
 
-- **Target column** — the bundled task prompts assume a Titanic-style dataset (`target_column='Survived'`, group `Sex`). For other datasets, adjust the task descriptions in `src/orchestrator.py`.
+- **Target column** — pass `--target <column>` (CLI) or set it in the dashboard; defaults to `Survived`. The statistician's t-test still groups by `Sex` (Titanic-specific) — adjust that line in `src/orchestrator.py` for other datasets.
 - **Rate limits** — the orchestrator retries on `429` with exponential backoff (60/120/180s). Keep `MAX_RPM` at or below your provider tier.
 - **Security** — rotate any API key that has been shared or committed. Keys live in `.env` only.
 
