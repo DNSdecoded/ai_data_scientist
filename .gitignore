@@ -1,0 +1,33 @@
+# Secrets / env
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Data & artifacts (may contain user data / large files)
+data/uploads/
+data/processed/
+data/versions/
+outputs/
+logs/
+*.db
+experiments/*.db
+
+# Tooling cruft
+.mimocode/
+node_modules/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
